@@ -1,0 +1,6 @@
+C:\Users\Marco\AppData\Local\Temporary Projects\Imasm\bin\Release\Imasm.exe
+C:\Users\Marco\AppData\Local\Temporary Projects\Imasm\bin\Release\Imasm.pdb
+C:\Users\Marco\AppData\Local\Temporary Projects\Imasm\obj\x86\Release\Imasm.exe
+C:\Users\Marco\AppData\Local\Temporary Projects\Imasm\obj\x86\Release\Imasm.pdb
+C:\Users\Marco\Desktop\SplittyDev\C\Imardin\Imasm\obj\x86\Release\Imasm.exe
+C:\Users\Marco\Desktop\SplittyDev\C\Imardin\Imasm\obj\x86\Release\Imasm.pdb
