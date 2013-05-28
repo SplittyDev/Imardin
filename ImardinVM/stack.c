@@ -3,7 +3,7 @@
 
 int Stackseg = 0;
 int StackPointer = 0;
-char* Stack;
+char* Stack = NULL;
 int CallPointer = 0;
 
 void PushInt64(uint64_t qword)

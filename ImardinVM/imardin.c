@@ -3,13 +3,19 @@
 
 void Fail (char* errormessage)
 {
-	printf ("IMARDIN> ERROR: %s\n", errormessage);
+	printf ("IMARDIN::ERROR-> %s\n", errormessage);
 	exit (1);
+}
+
+void Break ()
+{
+	printf ("IMARDIN::BREAK-> Break at 0x%x\n", pos);
+	while (1);
 }
 
 void Warning (char* warningmessage)
 {
-	printf ("IMARDIN> WARNING: %s\n", warningmessage);
+	printf ("IMARDIN::WARNING-> %s\n", warningmessage);
 }
 
 #include <stdlib.h>
@@ -42,20 +48,20 @@ void RunVM (uint32_t origin)
 		{
 			case PUSH   : _PUSH 	(length); 				break;
 			case POP	: _POP		(length); 				break;
-			case SSS	: Warning   ("Unimplemented: SSS"); break;
-			case LSS	: Warning   ("Unimplemented: LSS"); break;
-			case SSP	: Warning   ("Unimplemented: SSP"); break;
-			case LSP	: Warning   ("Unimplemented: LSP"); break;
+			case SSS	: Warning   ("Unimplemented: SSS");	Break ();	break;
+			case LSS	: Warning   ("Unimplemented: LSS"); Break ();	break;
+			case SSP	: Warning   ("Unimplemented: SSP"); Break ();	break;
+			case LSP	: Warning   ("Unimplemented: LSP"); Break ();	break;
 			case STORE	: _STORE	(length);				break;
 			case LOAD	: _LOAD		(length);				break;
-			case BEQ	: _BEQ		();						break;
-			case BNE	: _BNE 		();						break;
-			case BGT	: _BGT		();						break;
-			case BLT	: _BLT		();						break;
-			case BZ		: _BZ		();						break;
-			case BNZ	: _BNZ		();						break;
-			case BRA	: _BRA		();						break;
-			case BSR	: _BSR		();						break;
+			case JEQ	: _JEQ		();						break;
+			case JNE	: _JNE 		();						break;
+			case JGT	: _JGT		();						break;
+			case JLT	: _JLT		();						break;
+			case JZ		: _JZ		();						break;
+			case JNZ	: _JNZ		();						break;
+			case JMP	: _JMP		();						break;
+			case JSR	: _JSR		();						break;
 			case ADD	: _ADD		();						break;
 			case FADD	: _FADD		();						break;
 			case SUB	: _SUB		();						break;
@@ -64,11 +70,20 @@ void RunVM (uint32_t origin)
 			case FMUL	: _FMUL		();						break;
 			case DIV	: _DIV		();						break;
 			case FDIV	: _FDIV		();						break;
+			case MOD	: _MOD		();						break;
+			case SIN	: _SIN		();						break;
+			case ASIN	: _ASIN		();						break;
+			case COS	: _COS		();						break;
+			case ACOS	: _ACOS		();						break;
+			case TAN	: _TAN		();						break;
+			case ATAN	: _ATAN		();						break;
 			case SYSF	: _SYSF		();						break;
+			case BREAK	: _BREAK	();						break;
 			case AND	: _AND		();						break;
 			case OR		: _OR		();						break;
 			case XOR	: _XOR		();						break;
-			default     : Warning   ("Invalid opcode!");    break;
+			case NEG	: _NEG		();						break;
+			default     : Warning   ("Invalid opcode!"); 	Break ();	break;
 		}
 	}
 }

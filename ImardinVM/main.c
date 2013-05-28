@@ -10,23 +10,28 @@ int main(int argc, char* argv[])
     int origin = 0;
     int memory = 0xFFFF;
 
-    FILE* binary;
+    FILE* binary = NULL;
 
     if (argc < 2)
     {
+        printf ("--- Imardin Virtual Machine\n");
         printf ("Invalid syntax!\n");
         printf ("Syntax: imardin <binary> [args]\n");
+        printf ("---\n");
+        Break ();
     }
     else if (argc >= 2)
     {
         if (strcmp ("-help", &argv[1][0]) == 0 || strcmp ("-?", &argv[1][0]) == 0)
         {
+            printf ("--- Imardin Virtual Machine\n");
             printf ("Imardin Help\n");
             printf ("Syntax: imardin <binary> [args]\n\n");
             printf ("Argument       Description\n");
             printf ("-org <value>   Change origin\n");
             printf ("-ram <value>   Change available memory\n");
-            return 0;
+            printf ("---\n");
+            Break ();
         }
 
         binary = fopen (argv[1], "r");
@@ -47,28 +52,37 @@ int main(int argc, char* argv[])
                 memory = atoi (sram);
             }
         }
-
-        char current;
-        int position = 0;
-
-        InitializeVM (memory);
-
-        fseek (binary, 0L, SEEK_END);
-        int filesize = ftell (binary);
-        fseek (binary, 0L, SEEK_SET);
-
-        while (position < filesize)
-        {
-            current = fgetc (binary);
-            Memory [origin + position] = current;
-            ++position;
-        }
-
-        heap = origin + filesize;
-
-        RunVM (origin);
-
-        fclose (binary);
-        return 0;
     }
+
+    char current;
+    int position = 0;
+
+    InitializeVM (memory);
+
+    fseek (binary, 0L, SEEK_END);
+    int filesize = ftell (binary);
+    fseek (binary, 0L, SEEK_SET);
+
+    if (binary == 0 || filesize == 0)
+    {
+        printf ("--- Imardin Virtual Machine\n");
+        printf ("Invalid file!\n");
+        printf ("---\n");
+        fclose (binary);
+        Break ();
+    }
+
+    while (position < filesize)
+    {
+        current = fgetc (binary);
+        Memory [origin + position] = current;
+        position++;
+    }
+
+    heap = origin + filesize;
+
+    RunVM (origin);
+
+    fclose (binary);
+    return 0;
 }

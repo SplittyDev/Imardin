@@ -10,7 +10,7 @@ void sysf_print ()
 	FILE* outstream = stdout;
 	while (Memory [string] != 0)
 	{
-		fprintf (outstream, "%c", Memory[string]);
+		fprintf (outstream, "%c", Memory [string]);
 		string++;
 	}
 }
@@ -28,8 +28,8 @@ void sysf_read ()
 
 void InitializeSyscalls ()
 {
-	syscalls[1] = sysf_print;
-	syscalls[2] = sysf_read;
+	syscalls [1] = sysf_print;
+	syscalls [2] = sysf_read;
 }
 
 #endif

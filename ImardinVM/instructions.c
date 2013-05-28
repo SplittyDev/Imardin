@@ -57,29 +57,29 @@ void _STORE (uint32_t arglength)
 	if (arglength == 1)
 	{
 		pos++;
-		int32_t storepos = PopInt32 ();
-		int8_t value = PopInt8 ();
+		uint32_t storepos = PopInt32 ();
+		uint8_t value = PopInt8 ();
 		Memory [storepos] = value;
 	}
 	else if (arglength == 2)
 	{
 		pos++;
-		int32_t storepos = PopInt32 ();
-		int16_t value = PopInt16 ();
+		uint32_t storepos = PopInt32 ();
+		uint16_t value = PopInt16 ();
 		Memory [storepos] = value;
 	}
 	else if (arglength == 4)
 	{
 		pos++;
-		int32_t storepos = PopInt32 ();
-		int32_t value = PopInt32 ();
+		uint32_t storepos = PopInt32 ();
+		uint32_t value = PopInt32 ();
 		Memory [storepos] = value;
 	}
 	else if (arglength == 8)
 	{
 		pos++;
-		int32_t storepos = PopInt32 ();
-		int64_t value = PopInt64 ();
+		uint32_t storepos = PopInt32 ();
+		uint64_t value = PopInt64 ();
 		Memory [storepos] = value;
 	}
 	else
@@ -93,115 +93,115 @@ void _LOAD (uint32_t arglength)
 	if (arglength == 1)
 	{
 		pos++;
-		int32_t loadpos = PopInt32 ();
-		int8_t value = Memory [loadpos];
+		uint32_t loadpos = PopInt32 ();
+		uint8_t value = Memory [loadpos];
 		PushInt8 (value);
 	}
 	else if (arglength == 2)
 	{
 		pos++;
 		ReadInt16 ();
-		int32_t loadpos = PopInt32 ();
-		int16_t value = 0;
-		char* ptr = &value;
-		ptr[0] = Memory [loadpos];
-		ptr[1] = Memory [loadpos + 1];
+		uint32_t loadpos = PopInt32 ();
+		uint16_t value = 0;
+		uint16_t* ptr = &value;
+		ptr [0] = Memory [loadpos];
+		ptr [1] = Memory [loadpos + 1];
 		PushInt16 (value);
 	}
 	else if (arglength == 4)
 	{
 		pos++;
 		ReadInt32 ();
-		int32_t loadpos = PopInt32 ();
-		int32_t value = 0;
-		char* ptr = &value;
-		ptr[0] = Memory [loadpos];
-		ptr[1] = Memory [loadpos + 1];
-		ptr[2] = Memory [loadpos + 2];
-		ptr[3] = Memory [loadpos + 3];
+		uint32_t loadpos = PopInt32 ();
+		uint32_t value = 0;
+		uint32_t* ptr = &value;
+		ptr [0] = Memory [loadpos];
+		ptr [1] = Memory [loadpos + 1];
+		ptr [2] = Memory [loadpos + 2];
+		ptr [3] = Memory [loadpos + 3];
 		PushInt32 (value);
 	}
 	else if (arglength == 8)
 	{
 		pos++;
 		ReadInt64 ();
-		int32_t loadpos = PopInt32 ();
-		int64_t value = 0;
-		char* ptr = &value;
-		ptr[0] = Memory [loadpos];
-		ptr[1] = Memory [loadpos + 1];
-		ptr[2] = Memory [loadpos + 2];
-		ptr[3] = Memory [loadpos + 3];
-		ptr[4] = Memory [loadpos + 4];
-		ptr[5] = Memory [loadpos + 5];
-		ptr[6] = Memory [loadpos + 6];
-		ptr[7] = Memory [loadpos + 7];
+		uint32_t loadpos = PopInt32 ();
+		uint64_t value = 0;
+		uint64_t* ptr = &value;
+		ptr [0] = Memory [loadpos];
+		ptr [1] = Memory [loadpos + 1];
+		ptr [2] = Memory [loadpos + 2];
+		ptr [3] = Memory [loadpos + 3];
+		ptr [4] = Memory [loadpos + 4];
+		ptr [5] = Memory [loadpos + 5];
+		ptr [6] = Memory [loadpos + 6];
+		ptr [7] = Memory [loadpos + 7];
 		PushInt64 (value);
 	}
 }
 
-void _BEQ ()
+void _JEQ ()
 {
-	int32_t posx = ReadInt32 ();
+	uint32_t posx = ReadInt32 ();
 	if (PopInt32() == PopInt32 ())
 	{
 		pos += posx;
 	}
 }
 
-void _BNE ()
+void _JNE ()
 {
-	int32_t posx = ReadInt32 ();
+	uint32_t posx = ReadInt32 ();
 	if (PopInt32 () != PopInt32 ())
 	{
 		pos += posx;
 	}
 }
 
-void _BGT ()
+void _JGT ()
 {
-	int32_t posx = ReadInt32 ();
+	uint32_t posx = ReadInt32 ();
 	if (PopInt32 () < PopInt32 () + 1)
 	{
 		pos += posx;
 	}
 }
 
-void _BLT ()
+void _JLT ()
 {
-	int32_t posx = ReadInt32 ();
+	uint32_t posx = ReadInt32 ();
 	if (PopInt32() + 1 > PopInt32 ())
 	{
 		pos += posx;
 	}
 }
 
-void _BZ ()
+void _JZ ()
 {
-	int32_t posx = ReadInt32 ();
-	if (PopInt32 () == 0)
+	uint32_t posx = ReadInt32 ();
+	if (0 == PopInt32 ())
 	{
 		pos += posx;
 	}
 }
 
-void _BNZ ()
+void _JNZ ()
 {
-	int32_t posx = ReadInt32 ();
-	if (PopInt32 () != 0)
+	uint32_t posx = ReadInt32 ();
+	if (0 != PopInt32 ())
 	{
 		pos += posx;
 	}
 }
 
-void _BRA ()
+void _JMP ()
 {
 	pos += ReadInt32 ();
 }
 
-void _BSR ()
+void _JSR ()
 {
-	int32_t posx = ReadInt32 ();
+	uint32_t posx = ReadInt32 ();
 	Stack [CallPointer] = pos;
 	CallPointer++;
 	pos += posx;
@@ -218,7 +218,7 @@ void _FADD ()
 {
 	float op1 = (float)PopInt32 ();
 	float op2 = (float)PopInt32 ();
-	PushInt32 ((int32_t)(op1 + op2));
+	PushInt32 ((uint32_t)(op1 + op2));
 }
 
 void _SUB ()
@@ -230,7 +230,7 @@ void _FSUB ()
 {
 	float op1 = (float)PopInt32 ();
 	float op2 = (float)PopInt32 ();
-	PushInt32 ((int32_t)(op1 - op2));
+	PushInt32 ((uint32_t)(op1 - op2));
 }
 
 void _MUL ()
@@ -247,8 +247,8 @@ void _FMUL ()
 
 void _DIV ()
 {
-	int32_t op1 = PopInt32 ();
-	int32_t op2 = PopInt32 ();
+	uint32_t op1 = PopInt32 ();
+	uint32_t op2 = PopInt32 ();
 	if (op2 != 0) PushInt32 (op1 / op2);
 	else Fail ("Division by zero");
 }
@@ -261,10 +261,50 @@ void _FDIV ()
 	else Fail ("Division by zero");
 }
 
+void _MOD ()
+{
+	PushInt32 (PopInt32 () % PopInt32 ());
+}
+
+void _SIN ()
+{
+	PushInt32 (sin (PopInt32 ()));
+}
+
+void _ASIN ()
+{
+	PushInt32 (asin (PopInt32 ()));
+}
+
+void _COS ()
+{
+	PushInt32 (cos (PopInt32 ()));
+}
+
+void _ACOS ()
+{
+	PushInt32 (acos (PopInt32 ()));
+}
+
+void _TAN ()
+{
+	PushInt32 (tan (PopInt32 ()));
+}
+
+void _ATAN ()
+{
+	PushInt32 (atan (PopInt32 ()));
+}
+
 void _SYSF ()
 {
-	int32_t function = ReadInt32 ();
+	uint32_t function = ReadInt32 ();
 	((void (*)(void))syscalls[function])();
+}
+
+void _BREAK ()
+{
+	Break ();
 }
 
 void _AND ()
@@ -282,10 +322,23 @@ void _XOR ()
 	PushInt32 (PopInt32 () ^ PopInt32 ());
 }
 
-// -> SHL
-// -> SHR
+void _SHL ()
+{
+	PushInt32 (PopInt32 () < PopInt32 ());
+}
+
+void _SHR ()
+{
+	PushInt32 (PopInt32 () > PopInt32 ());
+}
+
 // -> ROL
 // -> ROR
+
+void _NEG ()
+{
+	PushInt32 (-(PopInt32 ()));
+}
 
 void _RET ()
 {
