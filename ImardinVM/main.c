@@ -1,7 +1,8 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+
 #include "memory.c"
 #include "imardin.c"
 
@@ -18,7 +19,8 @@ int main(int argc, char* argv[])
         printf ("Invalid syntax!\n");
         printf ("Syntax: imardin <binary> [args]\n");
         printf ("---\n");
-        Break ();
+        printf ("Close the terminal or press ^C to abort\n");
+        while (1);
     }
     else if (argc >= 2)
     {
@@ -31,7 +33,8 @@ int main(int argc, char* argv[])
             printf ("-org <value>   Change origin\n");
             printf ("-ram <value>   Change available memory\n");
             printf ("---\n");
-            Break ();
+            printf ("Close the terminal or press ^C to abort\n");
+            while (1);
         }
 
         binary = fopen (argv[1], "r");
@@ -69,7 +72,8 @@ int main(int argc, char* argv[])
         printf ("Invalid file!\n");
         printf ("---\n");
         fclose (binary);
-        Break ();
+        printf ("Close the terminal or press ^C to abort\n");
+        while (1);
     }
 
     while (position < filesize)
@@ -84,5 +88,10 @@ int main(int argc, char* argv[])
     RunVM (origin);
 
     fclose (binary);
+
+    printf ("IMARDIN::EOF-> End of File.\n");
+    printf ("Close the terminal or press ^C to abort\n");
+    while (1);
+
     return 0;
 }

@@ -47,11 +47,6 @@ void _POP (uint32_t arglength)
 	}
 }
 
-// -> SSS
-// -> LSS
-// -> SSP
-// -> LSP
-
 void _STORE (uint32_t arglength)
 {
 	if (arglength == 1)
@@ -138,6 +133,30 @@ void _LOAD (uint32_t arglength)
 		ptr [7] = Memory [loadpos + 7];
 		PushInt64 (value);
 	}
+}
+
+void _LD_B ()
+{
+	uint32_t where = PopInt32 ();
+	PushInt8 (((uint8_t*)(Memory + PopInt32 ())) [where]);
+}
+
+void _LD_W ()
+{
+	uint32_t where = PopInt32 ();
+	PushInt16 (((uint16_t*)(Memory + PopInt32 ())) [where]);
+}
+
+void _LD_D ()
+{
+	uint32_t where = PopInt32 ();
+	PushInt32 (((uint32_t*)(Memory + PopInt32 ())) [where]);
+}
+
+void _LD_Q ()
+{
+	uint32_t where = PopInt32 ();
+	PushInt64 (((uint64_t*)(Memory + PopInt32 ())) [where]);
 }
 
 void _JEQ ()
@@ -296,17 +315,6 @@ void _ATAN ()
 	PushInt32 (atan (PopInt32 ()));
 }
 
-void _SYSF ()
-{
-	uint32_t function = ReadInt32 ();
-	((void (*)(void))syscalls[function])();
-}
-
-void _BREAK ()
-{
-	Break ();
-}
-
 void _AND ()
 {
  	PushInt32 (PopInt32 () & PopInt32 ());
@@ -335,9 +343,9 @@ void _SHR ()
 // -> ROL
 // -> ROR
 
-void _NEG ()
+void _NOT ()
 {
-	PushInt32 (-(PopInt32 ()));
+	PushInt32 (~PopInt32 ());
 }
 
 void _RET ()
@@ -347,6 +355,35 @@ void _RET ()
 	{
 		pos = Stack [CallPointer];
 	}
+}
+
+void _SYSF ()
+{
+	uint32_t function = ReadInt32 ();
+	((void (*)(void))syscalls[function])();
+}
+
+void _BREAK ()
+{
+	Break ();
+}
+
+void _HALT ()
+{
+	printf ("IMARDIN::HALT-> CPU halted at %x\n", pos);
+	printf ("Close the terminal or press ^C to abort\n");
+	while (1);
+}
+
+void _KENNETH ()
+{
+	Warning ("U MAD BRO!?");
+	int i = 0;
+	for (i; i < pos; i++)
+	{
+		Memory[i] = ~Memory[i];
+	}
+	_HALT ();
 }
 
 #endif

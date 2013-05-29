@@ -3,16 +3,22 @@
 
 void* syscalls [255];
 
-void sysf_print ()
+void sysf_print_str ()
 {
 	uint32_t string = PopInt32 ();
-	uint32_t handle = PopInt32 ();
 	FILE* outstream = stdout;
 	while (Memory [string] != 0)
 	{
 		fprintf (outstream, "%c", Memory [string]);
 		string++;
 	}
+}
+
+void sysf_print_int ()
+{
+	uint32_t integer = PopInt32 ();
+	FILE* outstream = stdout;
+	fprintf (outstream, "%d", Memory [integer]);
 }
 
 void sysf_read ()
@@ -28,8 +34,9 @@ void sysf_read ()
 
 void InitializeSyscalls ()
 {
-	syscalls [1] = sysf_print;
-	syscalls [2] = sysf_read;
+	syscalls [1] = sysf_print_str;
+	syscalls [2] = sysf_print_int;
+	syscalls [3] = sysf_read;
 }
 
 #endif

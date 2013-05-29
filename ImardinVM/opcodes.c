@@ -5,13 +5,15 @@
 #define PUSH		0x01 // Push
 #define POP			0x02 // Pop
 
+// Store Operations
+#define STORE		0x03 // Store
 
-#define SSS			0x03 // unimplemented
-#define LSS			0x04 // unimplemented
-#define SSP			0x05 // unimplemented
-#define LSP			0x06 // unimplemented
-#define STORE		0x07 // Store
-#define LOAD		0x08 // Load
+// Load Operations
+#define LOAD		0x04 // Load
+#define LD_B		0x05 // Load byte
+#define LD_W		0x06 // Load word
+#define LD_D		0x07 // Load dword
+#define LD_Q		0x08 // Load qword
 
 // Branch Operations
 #define JEQ			0x09 // Jump if equal
@@ -41,7 +43,7 @@
 #define COS			0x1F // Cosine
 #define ACOS		0x20 // Acosine
 #define TAN			0x21 // Tangential
-#define ATAN		0x22 // Acostangential
+#define ATAN		0x22 // Atangential
 
 // Bitwise Operations
 #define AND			0x23 // Bitwise and
@@ -49,12 +51,14 @@
 #define XOR			0x25 // Bitwise xor
 #define SHL			0x26 // Bitwise shift left
 #define SHR			0x27 // Bitwise shift right
-#define ROL			0x28 // unimplemented
-#define ROR			0x29 // unimplemented
-#define NEG			0x2A // Negate
+#define ROL			0x28 // Bitwise rotation left, unimplemented
+#define ROR			0x29 // Bitwise rotation right, unimplemented
+#define NOT			0x2A // Bitwise not
 
 // Imardin Operations
-#define SYSF		0x2B // System function
-#define BREAK		0x2C // Break
+#define SYSF		0x4A // System function
+#define BREAK		0x4B // Break at pos
+#define HALT		0x4C // Halt
+#define KENNETH		0x4D // Fuck up the virtual memory
 
 #endif
